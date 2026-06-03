@@ -109,7 +109,20 @@ public:
 		tree->print();
 	}
 
-	void update(Dictionary<K,V> *D) {}
+	void update(Dictionary<K,V> *D) {
+		List<K>* keys = D->getKeys();
+		for (keys->goToStart(); !keys->atEnd(); keys->next()) {
+			K currentKey = keys->getElement();
+			V currentValue = D->getValue(currentKey);
+			if (contains(currentKey)) {
+				setValue(currentKey, currentValue);
+			}
+			else {
+				insert(currentKey, currentValue);
+			}
+		}
+		delete keys;
+	}
 
 	void zip(List<K>* keys, List<V>* values) {}
 
