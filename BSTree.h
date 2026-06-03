@@ -207,6 +207,10 @@ public:
 		}
 	}
 
+	BSTNode<E>* getRoot() {
+		return root;
+	}
+
 	int getSize() {
 		return size;
 	}

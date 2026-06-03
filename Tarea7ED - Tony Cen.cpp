@@ -14,6 +14,68 @@ using std::runtime_error;
 using std::endl;
 
 int main(){
+    // 1. Create a dictionary mapping integer keys to string values
+    BSTDictionary<int, string> dict;
+
+    cout << "--- Testing BSTDictionary ---" << endl;
+    cout << "Is empty? " << (dict.isEmpty() ? "Yes" : "No") << endl;
+
+    // 2. Test Insert
+    cout << "\nInserting elements..." << endl;
+    dict.insert(10, "Apple");
+    dict.insert(5, "Banana");
+    dict.insert(20, "Cherry");
+    dict.print();
+    cout << endl;
+    dict.getKeys()->print();
+    dict.getValues()->print();
+
+    cout << "Is empty? " << (dict.isEmpty() ? "Yes" : "No") << endl;
+
+    // 3. Test Contains and GetValue
+    cout << "\nRetrieving elements:" << endl;
+    if (dict.contains(10)) {
+        cout << "Key 10 maps to: " << dict.getValue(10) << endl;
+    }
+    if (dict.contains(5)) {
+        cout << "Key 5 maps to: " << dict.getValue(5) << endl;
+    }
+
+    // 4. Test SetValue (Updating an existing key)
+    cout << "\nUpdating key 5..." << endl;
+    dict.setValue(5, "Blueberry");
+    cout << "Key 5 now maps to: " << dict.getValue(5) << endl;
+    dict.print();
+
+    // 5. Test Remove
+    cout << "\nRemoving key 10..." << endl;
+    string removedValue = dict.remove(10);
+    cout << "Removed value: " << removedValue << endl;
+    cout << "Does it still contain key 10? " << (dict.contains(10) ? "Yes" : "No") << endl;
+    dict.print();
+
+    // 6. Test Exception Handling
+    cout << "\nTesting exception handling..." << endl;
+    try {
+        dict.getValue(99); // This key doesn't exist
+    }
+    catch (const std::runtime_error& e) {
+        cout << "Caught expected exception: " << e.what() << endl;
+    }
+
+    try {
+        dict.insert(5, "Duplicate Banana"); // Key 5 already exists
+    }
+    catch (const std::runtime_error& e) {
+        cout << "Caught expected exception: " << e.what() << endl;
+    }
+
+    // 7. Test Clear
+    cout << "\nClearing dictionary..." << endl;
+    dict.clear();
+    cout << "Is empty after clear? " << (dict.isEmpty() ? "Yes" : "No") << endl;
+
+    return 0;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

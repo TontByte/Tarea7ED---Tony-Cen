@@ -6,6 +6,7 @@
 #include "Pair.h"
 #include "List.h"
 #include "ArrayList.h"
+#include "BSTNode.h"
 
 using std::cout;
 using std::runtime_error;
@@ -15,6 +16,24 @@ template <typename K, typename V>
 class BSTDictionary : public Dictionary<K, V>{
 private:
 	BSTree<Pair<K, V>>* tree;
+
+	void getKeysAux(BSTNode<Pair<K, V>>* current, List<K>* elements) {
+		if (current == nullptr) {
+			return;
+		}
+		getKeysAux(current->left, elements);
+		elements->append(current->element.key);
+		getKeysAux(current->right, elements);
+	}
+
+	void getValuesAux(BSTNode<Pair<K, V>>* current, List<V>*elements) {
+		if (current == nullptr) {
+			return;
+		}
+		getValuesAux(current->left, elements);
+		elements->append(current->element.value);
+		getValuesAux(current->right, elements);
+	}
 
 public:
 	BSTDictionary() {
@@ -69,34 +88,25 @@ public:
 		return tree->isEmpty();
 	}
 
-	//fix
+	//acordarse de usar delete
 	List<K>* getKeys() {
-		List<K>* keys = new ArrayList<K>(getSize());
-		List<K>* elements = tree->getElements();
-		for (elements.goToStart(); !elements.atEnd(); elements.next()) {
-			Pair<K, V> p = elements.getElement();
-			keys->append(p.key);
-		}
-		return keys;
+		List<K>* elements = new DLinkedList<K>();
+		getKeysAux(tree->getRoot(), elements);
+		return elements;
 	}
 
-	//fix
 	List<V>* getValues() {
-		List<K>* values = new ArrayList<K>(getSize());
-		List<K>* elements = tree->getElements();
-		for (elements.goToStart(); !elements.atEnd(); elements.next()) {
-			Pair<K, V> p = elements.getElement();
-			values->append(p.value);
-		}
-		return values;
+		List<V>* elements = new DLinkedList<V>();
+		getValuesAux(tree->getRoot(), elements);
+		return elements;
 	}
 
 	int getSize() {
-		tree->getSize();
+		return tree->getSize();
 	}
 
 	void print() {
-		cout << "luego" << endl;
+		tree->print();
 	}
 
 	void update(Dictionary<K,V> *D) {}
