@@ -191,6 +191,22 @@ public:
 		return elements;
 	}
 
+	void setElement(E element) {
+		BSTNode<E>* current = root;
+		while (current != nullptr) {
+			if (element == current->element) {
+				current->element = element;
+				return;
+			}
+			if (element < current->element) {
+				current = current->left;
+			}
+			else {
+				current = current->right;
+			}
+		}
+	}
+
 	int getSize() {
 		return size;
 	}
@@ -205,5 +221,5 @@ public:
 
 
 
-	// min, max, setelemtn (dangerous)
+	// min, max
 };

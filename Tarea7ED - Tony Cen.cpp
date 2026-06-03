@@ -2,10 +2,18 @@
 //
 
 #include <iostream>
+#include <string>
+#include <stdexcept>
+#include "BSTDictionary.h"
+#include "Dictionary.h"
+#include "List.h"
 
-int main()
-{
-    std::cout << "Hello World!\n";
+using std::cout;
+using std::string;
+using std::runtime_error;
+using std::endl;
+
+int main(){
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
