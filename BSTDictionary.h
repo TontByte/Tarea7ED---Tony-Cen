@@ -124,7 +124,22 @@ public:
 		delete keys;
 	}
 
-	void zip(List<K>* keys, List<V>* values) {}
+	void zip(List<K>* keys, List<V>* values) {
+		keys->goToStart();
+		values->goToStart();
+		while (!keys->atEnd() && !values->atEnd()) {
+			K currentKey = keys->getElement();
+			V currentValue = values->getElement();
+			if (contains(currentKey)) {
+				setValue(currentKey, currentValue);
+			}
+			else {
+				insert(currentKey, currentValue);
+			}
+			keys->next();
+			values->next();
+		}
+	}
 
 };
 
