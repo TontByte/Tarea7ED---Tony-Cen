@@ -141,6 +141,14 @@
   <ItemGroup>
     <ClCompile Include="Tarea7ED - Tony Cen.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BSTDictionary.h" />
+    <ClInclude Include="BSTNode.h" />
+    <ClInclude Include="BSTree.h" />
+    <ClInclude Include="DLinkedList.h" />
+    <ClInclude Include="DNode.h" />
+    <ClInclude Include="List.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
