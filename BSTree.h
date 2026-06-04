@@ -115,7 +115,7 @@ private:
 		printAux(current->left);
 		cout << " " << current->element << " ";
 		printAux(current->right);
-		cout << ")";
+		cout << ")" << endl;
 	}
 
 public:
