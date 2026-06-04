@@ -14,8 +14,10 @@ using std::runtime_error;
 using std::endl;
 using std::cin;
 
-string getStringValue(string datoDeseado) {
-    cout << datoDeseado << "(ingrese aqui): ";
+string getStringValue(string datoDeseado, bool text) {
+    if (text) {
+        cout << datoDeseado << "(ingrese aqui): ";
+    }
     string value;
     getline(cin, value);
     return value;
@@ -59,12 +61,13 @@ void menu(BSTDictionary<int, string>* d1, BSTDictionary<int, string>* d2) {
     while (!stop) {
         try {
             cout << endl;
-            cout << "Diccionario 1:";
-            d1->print();
-            cout << "Diccionario 2: ";
-            d2->print();
-            cout << endl;
             if (option == 0) {
+                cout << "Diccionario 1: ";
+                d1->print();
+                cout << endl;
+                cout << "Diccionario 2: ";
+                d2->print();
+                cout << endl;
                 cout << "Ingrese la opcion deseada: " << endl;
                 cout << "1. insert()" << endl;
                 cout << "2. remove()" << endl;
@@ -80,15 +83,17 @@ void menu(BSTDictionary<int, string>* d1, BSTDictionary<int, string>* d2) {
                 cout << "12. Salir" << endl;
                 option = getNumValue(12, 1, true);
 
-                cout << endl;
-                cout << "Ingrese el digito del diccionario que desea editar (1-diccionario1, 2-diccionario2):" << endl;
-                selectedDictionary = getNumValue(2, 1, false);
+                if (option != 12) {
+                    cout << endl;
+                    cout << "Ingrese el digito del diccionario que desea editar (1-diccionario1, 2-diccionario2):" << endl;
+                    selectedDictionary = getNumValue(2, 1, false);
+                }
             }
             else if (option == 1) {
                 cout << "Insercion de dato" << endl;
                 cout << "Ingrese la llave: ";
-                int key = getNumValue(2147483647, 1, false);
-                string value = getStringValue("Valor");
+                int key = getNumValue(2147483647, -2147483648, false);
+                string value = getStringValue("Valor", true);
                 Pair<int, string> p(key, value);
                 cout << "Se va insertar " << p << " al diccionario " << selectedDictionary << endl;
                 if (selectedDictionary == 1) {
@@ -105,7 +110,7 @@ void menu(BSTDictionary<int, string>* d1, BSTDictionary<int, string>* d2) {
             else if (option == 2) {
                 cout << "Eliminar dato" << endl;
                 cout << "Ingrese la llave: ";
-                int key = getNumValue(2147483647, 1, false);
+                int key = getNumValue(2147483647, -2147483648, false);
                 if (selectedDictionary == 1) {
                     string v = d1->remove(key);
                     cout << "Se elimina " << v << endl;
@@ -122,7 +127,7 @@ void menu(BSTDictionary<int, string>* d1, BSTDictionary<int, string>* d2) {
             else if (option == 3) {
                 cout << "Conseguir valor" << endl;
                 cout << "Ingrese la llave: ";
-                int key = getNumValue(2147483647, 1, false);
+                int key = getNumValue(2147483647, -2147483648, false);
                 if (selectedDictionary == 1) {
                     string v = d1->getValue(key);
                     cout << "Valor encontrado: " << v << endl;
@@ -139,8 +144,8 @@ void menu(BSTDictionary<int, string>* d1, BSTDictionary<int, string>* d2) {
             else if (option == 4) {
                 cout << "Establecer valor" << endl;
                 cout << "Ingrese la llave: ";
-                int key = getNumValue(2147483647, 1, false);
-                string value = getStringValue("Valor");
+                int key = getNumValue(2147483647, -2147483648, false);
+                string value = getStringValue("Valor", true);
                 Pair<int, string> p(key, value);
                 cout << "Se cambia el valor de la llave " << key << " a " << value << endl;
                 if (selectedDictionary == 1) {
@@ -157,7 +162,8 @@ void menu(BSTDictionary<int, string>* d1, BSTDictionary<int, string>* d2) {
             else if (option == 5) {
                 cout << "Buscar llave" << endl;
                 cout << "Ingrese la llave: ";
-                int key = getNumValue(2147483647, 1, false);
+                int key = getNumValue(2147483647, -2147483648, false);
+                cout << "0 = falso, 1 = verdadero" << endl;
                 if (selectedDictionary == 1) {
                     cout << "La llave " << key << " se encuentra en d1: " << d1->contains(key) << endl;
                 }
@@ -236,10 +242,12 @@ void menu(BSTDictionary<int, string>* d1, BSTDictionary<int, string>* d2) {
             }
             else if (option == 10) {
                 if (selectedDictionary == 1) {
-
+                    cout << "Actualizacion de d1 utilizando d2" << endl;
+                    d1->update(d2);
                 }
                 else if (selectedDictionary == 2) {
-
+                    cout << "Actualizacion de d2 utilizando d1" << endl;
+                    d2->update(d1);
                 }
                 else {
                     throw runtime_error("Diccionario seleccionado invalido");
@@ -247,11 +255,38 @@ void menu(BSTDictionary<int, string>* d1, BSTDictionary<int, string>* d2) {
                 option = 0;
             }
             else if (option == 11) {
-                if (selectedDictionary == 1) {
+                cout << "Zip" << endl;
+                cout << "Ingrese cantidad de elementos que desea tener en las listas" << endl;
+                int amount = getNumValue(2147483647, 1, false);
+                List<int>* keys = new ArrayList<int>(amount);
+                List<string>* values = new ArrayList<string>(amount);
 
+                cout << "Por favor ingrese " << amount << " llaves:" << endl;
+                for (int i = 0; i < amount; i++) {
+                    cout << i+1 << ". ";
+                    int key = getNumValue(2147483647, -2147483648, false);
+                    keys->append(key);
+                }
+
+                cout << "Por favor ingrese " << amount << " valores:" << endl;
+                for (int j = 0; j < amount; j++) {
+                    cout << j+1 << ". ";
+                    string value = getStringValue("Valor", false);
+                    values->append(value);
+                }
+
+                cout << "Lista de llaves ingresados: ";
+                keys->print();
+                cout << "Lista de valores ingresados: ";
+                values->print();
+
+                if (selectedDictionary == 1) {
+                    cout << "Se ejecuta zip en d1." << endl;
+                    d1->zip(keys, values);
                 }
                 else if (selectedDictionary == 2) {
-
+                    cout << "Se ejecuta zip en d2." << endl;
+                    d2->zip(keys, values);
                 }
                 else {
                     throw runtime_error("Diccionario seleccionado invalido");
@@ -275,7 +310,9 @@ void menu(BSTDictionary<int, string>* d1, BSTDictionary<int, string>* d2) {
 int main(){
     BSTDictionary<int, string>* diccionario1 = new BSTDictionary<int, string>();
     BSTDictionary<int, string>* diccionario2 = new BSTDictionary<int, string>();
-
+    menu(diccionario1, diccionario2);
+    delete diccionario1;
+    delete diccionario2;
     return 0;
 }
 

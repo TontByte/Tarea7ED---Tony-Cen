@@ -43,7 +43,7 @@ public:
         if (size == 0) {
             throw runtime_error("List is empty.");
         }
-        if (current->next = tail) {
+        if (current->next == tail) {
             throw runtime_error("No current element");
         }
         E res = current->next->element;
@@ -58,7 +58,7 @@ public:
         if (size == 0) {
             throw runtime_error("List is empty.");
         }
-        if (current->next = tail) {
+        if (current->next == tail) {
             throw runtime_error("No current element");
         }
         current->next->element = element;
@@ -68,7 +68,7 @@ public:
         if (size == 0) {
             throw runtime_error("List is empty.");
         }
-        if (current->next = tail) {
+        if (current->next == tail) {
             throw runtime_error("No current element");
         }
         return current->next->element;
