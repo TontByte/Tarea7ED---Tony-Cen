@@ -212,13 +212,13 @@ void menu(BSTDictionary<int, string>* d1, BSTDictionary<int, string>* d2) {
                 cout << "Conseguir valores" << endl;
                 if (selectedDictionary == 1) {
                     List<string>* values = d1->getValues();
-                    cout << "Llaves de d1: ";
+                    cout << "Valores de d1: ";
                     values->print();
                     delete values;
                 }
                 else if (selectedDictionary == 2) {
                     List<string>* values = d2->getValues();
-                    cout << "Llaves de d2: ";
+                    cout << "Valores de d2: ";
                     values->print();
                     delete values;
                 }
@@ -291,6 +291,8 @@ void menu(BSTDictionary<int, string>* d1, BSTDictionary<int, string>* d2) {
                 else {
                     throw runtime_error("Diccionario seleccionado invalido");
                 }
+                delete keys;
+                delete values;
                 option = 0;
             }
             else if (option == 12) {
@@ -302,6 +304,7 @@ void menu(BSTDictionary<int, string>* d1, BSTDictionary<int, string>* d2) {
         }
         catch (const runtime_error& e) {
             cout << "Error: " << e.what() << endl;
+            option = 0;
         }
     }
 }

@@ -17,24 +17,6 @@ class BSTDictionary : public Dictionary<K, V>{
 private:
 	BSTree<Pair<K, V>>* tree;
 
-	void getKeysAux(BSTNode<Pair<K, V>>* current, List<K>* elements) {
-		if (current == nullptr) {
-			return;
-		}
-		getKeysAux(current->left, elements);
-		elements->append(current->element.key);
-		getKeysAux(current->right, elements);
-	}
-
-	void getValuesAux(BSTNode<Pair<K, V>>* current, List<V>*elements) {
-		if (current == nullptr) {
-			return;
-		}
-		getValuesAux(current->left, elements);
-		elements->append(current->element.value);
-		getValuesAux(current->right, elements);
-	}
-
 public:
 	BSTDictionary() {
 		tree = new BSTree<Pair<K, V>>();
@@ -90,15 +72,23 @@ public:
 
 	//acordarse de usar delete
 	List<K>* getKeys() {
-		List<K>* elements = new DLinkedList<K>();
-		getKeysAux(tree->getRoot(), elements);
-		return elements;
+		List<K>* keys = new DLinkedList<K>();
+		List<Pair<K, V>>* elements = tree->getElements();
+		for (elements->goToStart(); !elements->atEnd(); elements->next()) {
+			keys->append(elements->getElement().key);
+		}
+		delete elements;
+		return keys;
 	}
 
 	List<V>* getValues() {
-		List<V>* elements = new DLinkedList<V>();
-		getValuesAux(tree->getRoot(), elements);
-		return elements;
+		List<V>* values = new DLinkedList<V>();
+		List<Pair<K, V>>* elements = tree->getElements();
+		for (elements->goToStart(); !elements->atEnd(); elements->next()) {
+			values->append(elements->getElement().value);
+		}
+		delete elements;
+		return values;
 	}
 
 	int getSize() {
